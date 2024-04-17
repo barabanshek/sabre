@@ -6,9 +6,12 @@ We also put all Serverless benchmarks used for the end-to-end evaluation. They a
 
 ## Structure of the artifacts
 
-The projects involves 6 sub-projects described in the table ...
+The projects involves 6 sub-projects described in the table ... TODO ...
 
-TODO
+First, clone it:
+```
+git clone --recursive https://github.com/barabanshek/sabre.git
+```
 
 ## Reproducing IAA benchmarks
 
