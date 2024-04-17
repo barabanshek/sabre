@@ -14,6 +14,10 @@ TODO
 
 This reproduces **Figure 2, 3, 4, 5, 6, 7** from our paper.
 
+```
+cd IAA_benchmarking/
+```
+
 To reproduce, please, follow [Instructions](https://github.com/barabanshek/IAA_benchmarking?tab=readme-ov-file#run-with-docker) on running our IAA benchmarks in the prepared docker container. Please, use the frequency of 1.7 GHz as per paper (`./prepare_machine.sh 1700000`). This is the maximum supported frequency of our experimental Sapphire Rappids node.
 
 ## Reproducing Firecracker snapshotting results
