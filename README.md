@@ -63,7 +63,7 @@ If all works well, we can now run the benchmarks!
 
 ### Reproducing characterization of Sabre
 
-This reproduces Figure 9 from our paper.
+This reproduces **Figure 9** from our paper.
 ```
 # Make sure you installed the IAA benchmark earlier as we use datasets from there
 export SABRE_DATASET_PATH=IAA_benchmarking/dataset/snapshots_tmp
@@ -78,7 +78,7 @@ python3 firecracker/sabre/scripts/plot_microbenchmark.py results.csv
 
 ### Reproducing end-to-end experiments
 
-This allows to (manually) reproduce end-to-end cold start of Serverless functions for Figure 11 and 12.
+This allows to (manually) reproduce end-to-end cold start of Serverless functions for **Figure 11 and 12**.
 
 ```
 # Prepare environment for end-to-end Serverless experiments.
