@@ -10,3 +10,6 @@
 [submodule "firecracker-go-sdk"]
 	path = firecracker-go-sdk
 	url = https://github.com/barabanshek/firecracker-go-sdk.git
+[submodule "IAA_benchmarking"]
+	path = IAA_benchmarking
+	url = https://github.com/barabanshek/IAA_benchmarking
