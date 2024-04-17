@@ -1,0 +1,12 @@
+[submodule "firecracker"]
+	path = firecracker
+	url = https://github.com/barabanshek/firecracker.git
+[submodule "firecracker-containerd"]
+	path = firecracker-containerd
+	url = https://github.com/barabanshek/firecracker-containerd.git
+[submodule "vHive"]
+	path = vHive
+	url = https://github.com/barabanshek/vHive.git
+[submodule "firecracker-go-sdk"]
+	path = firecracker-go-sdk
+	url = https://github.com/barabanshek/firecracker-go-sdk.git
