@@ -22,12 +22,11 @@ TODO
 # Prepare environment.
 ./prepare_end_to_end_env.sh
 
+# Export required env variables.
+source env.sh
+
 # In a separate window: start firecracker-containerd.
 sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
-
-# Add go to PATH if needed.
-export GO_VERSION='1.21'
-export PATH=/usr/lib/go-${GO_VERSION}/bin:$PATH
 
 #
 # Running a single end-to-end benchmark (e.g. image_processing)
