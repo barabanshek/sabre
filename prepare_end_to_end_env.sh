@@ -19,5 +19,5 @@ pushd grpc/
 git submodule update --init
 mkdir -p cmake/build; cd cmake/build
 cmake -DgRPC_BUILD_TESTS=ON ../..
-make grpc_cli
+make grpc_cli -j
 popd
