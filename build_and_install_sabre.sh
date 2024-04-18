@@ -14,7 +14,13 @@ popd
 
 # Build firecracker-containerd with Sabre:
 #   - main instructions: https://github.com/barabanshek/firecracker-containerd/tree/sabre/sabre .
-pushd firecracker-containerd/sabre/
+# 
+# Due to a weird bug: https://github.com/barabanshek/sabre/issues/1, we clone the repo separately
+# outside of this folder.
+pushd ~/
+git clone https://github.com/barabanshek/firecracker-containerd.git
+cd firecracker-containerd/sabre/
+git fetch origin sabre; git checkout sabre
 ./install_contrainerd.sh
 ./configure_node_for_containerd.sh ${FIRECRACKER_PATH}
 ./configure_node_for_containerd.sh ${FIRECRACKER_PATH} # need to run twice due to a bug
