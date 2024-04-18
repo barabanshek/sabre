@@ -10,8 +10,11 @@ docker tag ${IMG_ID} localhost:5000/hello_world:latest
 docker push localhost:5000/hello_world:latest
 
 # Install grpc_cli
-git clone https://github.com/grpc/grpc.git
+# rm -fr grpc/
+# git clone https://github.com/grpc/grpc.git
+pushd grpc/
 git submodule update --init
-mkdir -p cmake/build; cd cd cmake/build
+mkdir -p cmake/build; cd cmake/build
 cmake -DgRPC_BUILD_TESTS=ON ../..
 make grpc_cli
+popd
