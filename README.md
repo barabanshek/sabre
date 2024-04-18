@@ -1,14 +1,26 @@
 # Artifacts for Sabre
 
-This repository contains all 6 dependent repositories for artifacts for the paper ["Sabre: Improving Memory Prefetching in Serverless MicroVMs with Near-Memory Hardware-Accelerated Compression"]() alongside with the instructions to reproduce our results.
+This repository contains all 5 dependent repositories for artifacts for the paper ["Sabre: Improving Memory Prefetching in Serverless MicroVMs with Near-Memory Hardware-Accelerated Compression"]() alongside with the instructions to reproduce our results.
 
 We also put all Serverless benchmarks used for the end-to-end evaluation. They are adopted from [serverless-faas-workbench](https://github.com/ddps-lab/serverless-faas-workbench), [SeBS](https://github.com/spcl/serverless-benchmarks), and [vSwarm](https://github.com/vhive-serverless/vSwarm).
 
 ## Structure of the artifacts
 
-The projects involves 6 sub-projects described in the table ... TODO ...
+The projects involves 5 sub-projects described in the table bellow.
 
-First, clone it:
+| sub-repo | Description |
+| --- | --- |
+| [IAA_benchmarking](https://github.com/barabanshek/IAA_benchmarking) | A set of our benchmarks to understand the performance implications of IAA (de)compression hardware on page compression and restoration. |
+| [Firecracker](https://github.com/barabanshek/firecracker/) | Sabre plugin for Firecracker microVMs. [README](https://github.com/barabanshek/firecracker/tree/sabre/sabre), [Full Diff](https://github.com/barabanshek/firecracker/compare/532677328480b7f4149192ec121ac076451ac098...sabre) |
+| [firecracker-containerd](https://github.com/barabanshek/firecracker-containerd/) | firecracker-continerd with exposed Sabre API [README](https://github.com/barabanshek/firecracker-containerd/tree/sabre/sabre), [Full Diff](https://github.com/barabanshek/firecracker-containerd/compare/6b2d23241ad47456283917c5f3a15638cbd66027...sabre) |
+| [firecracker-go-sdk](https://github.com/barabanshek/firecracker-go-sdk) | firecracker-go-sdk with exposed Sabre API. [Full Diff](https://github.com/barabanshek/firecracker-go-sdk/compare/1f800728632d4e45a384080a51676c5a43665ffd..sabre) |
+| [vHive](https://github.com/barabanshek/vHive) | Our clone of [vHive](https://dl.acm.org/doi/10.1145/3445814.3446714) project with exposed Sabre API. [README](https://github.com/barabanshek/vHive/tree/sabre/sabre), [Full Diff](https://github.com/barabanshek/vHive/compare/5143a83ba38f9e6a644fe5d64110cdb75f63d82d...sabre) |
+
+Each project contains the corresponding `README` with **detailed** instructions on how to build, install, test, and use each component. Please refer to these instructions for hacking.
+
+The next of this documentation describes the high-level and minimal instructions to reproduce results reported in our paper.
+
+First, clone this repo:
 ```
 git clone --recursive https://github.com/barabanshek/sabre.git
 ```
