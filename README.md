@@ -111,7 +111,7 @@ sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
 # Running a single end-to-end benchmark (e.g. image_processing).
 #
 
-# Build the benchmark and push into local registry (which should have been set-up
+# Build the benchmark and push into local registry (which has been set-up
 # with `prepare_end_to_end_env.sh` script).
 cd benchmarks/image_processing
 docker build -t localhost:5000/image_processing .
