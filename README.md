@@ -52,11 +52,13 @@ sudo firecracker-ctr --address /run/firecracker-containerd/containerd.sock run -
 
 Run `Hello, World` tests with end-to-end Serverless images in firecracker-containerd with Sabre. The test will run the standard `docker.io/library/hello-world` image inside firecracker using vHive Serverless infrastructure and do test snapshotting.
 ```
+pushd vHive/sabre
+
 # Simple uVM start-stop test
-sudo env "PATH=$PATH" go run vHive/sabre/hello_world.go -image=docker.io/library/hello-world:latest -memsize=256 -example=start-stop
+sudo env "PATH=$PATH" go run hello_world.go -image=docker.io/library/hello-world:latest -memsize=256 -example=start-stop
 
 # Diff snapshotting with Sabre
-sudo env "PATH=$PATH" go run vHive/sabre/hello_world.go -image=docker.io/library/hello-world:latest -memsize=256 -example=start-sabre-diff-snapshot-stop-resume-stop
+sudo env "PATH=$PATH" go run hello_world.go -image=docker.io/library/hello-world:latest -memsize=256 -example=start-sabre-diff-snapshot-stop-resume-stop
 
 # Check the Sabre snapshot file (`mem_file.snapshot` size should be MUCH less than uVM's memsize size)
 ls -sh /fccd/snapshots/myrev-4/*
