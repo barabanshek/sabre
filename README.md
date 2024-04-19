@@ -117,7 +117,7 @@ This allows to (manually) reproduce end-to-end cold start of Serverless function
 sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
 
 #
-# Running a single end-to-end benchmark (e.g. image_processing).
+# Running a single end-to-end benchmark to see Diff snapshotting.
 #
 
 # Build the benchmark and push into local registry.
@@ -146,5 +146,10 @@ ls -sh /fccd/snapshots/myrev-4/mem_file.snapshot
 # ... or for `cnn_image_classification`
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='Diff' -memsize=512
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='DiffCompressed' -memsize=512
+
+
+#
+# Running a single end-to-end benchmark to see REAP snapshotting.
+#
 
 ```
