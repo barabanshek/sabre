@@ -19,8 +19,9 @@ popd
 # outside of this folder.
 pushd ~/
 git clone https://github.com/barabanshek/firecracker-containerd.git
+cd firecracker-containerd/
 git fetch origin sabre; git checkout sabre
-cd firecracker-containerd/sabre/
+cd sabre/
 ./install_contrainerd.sh
 ./configure_node_for_containerd.sh ${FIRECRACKER_PATH}
 ./configure_node_for_containerd.sh ${FIRECRACKER_PATH} # need to run twice due to a bug

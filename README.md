@@ -113,12 +113,14 @@ sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
 
 # Build the benchmark and push into local registry (which has been set-up
 # with `prepare_end_to_end_env.sh` script).
-cd benchmarks/image_processing
+pushd benchmarks/image_processing/
 docker build -t localhost:5000/image_processing .
 docker push localhost:5000/image_processing
+popd
 
 # Run default Diff snapshotting with on-demand paging.
-sudo -E env "PATH=$PATH" go run vHive/sabre/run_end2end.go -image=127.0.0.1:5000/image_processing:latest -memsize=256
+pushd vHive/sabre/
+sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/image_processing:latest -memsize=256
 # Check size of the snapshot.
 ls -sh /fccd/snapshots/myrev-4/mem_file
 
