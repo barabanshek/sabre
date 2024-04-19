@@ -4,7 +4,7 @@
 # Run it after build_and_install.sh or after a reboot.
 
 # Configs:
-CPU_FREQ=1700000
+CPU_FREQ=2700000
 CONTAINER_SUBNET="172.16.0.1" # this must match the uVM IP address selection in vHive/networking/networkconfig.go
 
 # Clean-up previous stuff
