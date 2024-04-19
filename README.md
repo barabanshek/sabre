@@ -120,19 +120,31 @@ sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
 # Running a single end-to-end benchmark (e.g. image_processing).
 #
 
-# Build the benchmark and push into local registry (which has been set-up
-# with `prepare_end_to_end_env.sh` script).
-pushd benchmarks/image_processing/
-docker build -t localhost:5000/image_processing .
-docker push localhost:5000/image_processing
+# Build the benchmark and push into local registry.
+pushd benchmarks/python_list/
+docker build -t localhost:5000/python_list .
+docker push localhost:5000/python_list
+popd
+
+# ... or for `cnn_image_classification`
+pushd benchmarks/cnn_image_classification/
+docker build -t localhost:5000/cnn_image_classification .
+docker push localhost:5000/cnn_image_classification
 popd
 
 # Run default Diff snapshotting with on-demand paging.
 pushd vHive/sabre/
-sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/image_processing:latest -memsize=256
+sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='Diff' -memsize=512
 # Check size of the snapshot.
 ls -sh /fccd/snapshots/myrev-4/mem_file
 
 # Run Diff snapshotting with Sabre page prefetching.
-TODO
+sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='DiffCompressed' -memsize=512
+# Check size of the snapshot.
+ls -sh /fccd/snapshots/myrev-4/mem_file.snapshot
+
+# ... or for `cnn_image_classification`
+sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='Diff' -memsize=512
+sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='DiffCompressed' -memsize=512
+
 ```
