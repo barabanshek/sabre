@@ -25,6 +25,15 @@ First, clone this repo:
 git clone --recursive https://github.com/barabanshek/sabre.git
 ```
 
+## What machine to use
+
+Firecracker, firecracker-containerd, vHive, and all the infrastructure run on any x86/64 machine with Ubuntu 22.04 or higher. However, the Sabre plugin is based on Intel IAA technology and requires at least the 4th Gen Intel Xeon Scalable processor (Sapphire Rapids - SPR). In addition, not any SPR machine will work as the presence of IAA hardware and the exact configuration depends on the SKU. In theory, any IAA-enabled SPR machine should run Sabre with potentially varying performance.
+
+**CAUTION** The host kernel support for IAA hardware is still under active development; as of *Ubuntu 23.10*, the driver and kernel stack still has unsolved issues preventing using IAA hardware (e.g. [IOMMU](https://lore.kernel.org/lkml/c67754fc-9fff-43b4-82ce-078e71134815@linux.intel.com/T/) issue). If your node runs Ubuntu 22.04 - Ubuntu 23.10, please, manually update the host kernel to *6.8.2* which we tested to work with IAA. We expect all changes will finally converge in the next release.
+
+For artifact evaluation, we welcome reviewers to use our instance of an SPR node which runs the correct patched OS, BIOS, and other settings. This will alow to exactly reproduce our results. If you have your own SPR node, depending on the OS, Software/BIOS configurations, Sabre should still run. But performance results are expected to vary between different nodes.
+
+
 ## Reproducing IAA benchmarks
 
 This reproduces **Figure 2, 3, 4, 5, 6, 7** from our paper.
@@ -36,14 +45,6 @@ cd IAA_benchmarking/
 To reproduce, please, follow [Instructions](https://github.com/barabanshek/IAA_benchmarking?tab=readme-ov-file#run-with-docker) on running our IAA benchmarks in the prepared docker container. Please, use the CPU frequency of `1.7 GHz` as per paper (`./prepare_machine.sh 1700000`) and use the [same hardware configuration](https://github.com/barabanshek/IAA_benchmarking?tab=readme-ov-file#appendix-configuration-used-for-the-paper). We use `1.7 GHz` as the highest possible frequency of our experimental node; if you have a faster SPR node, feel free to re-run the benchmarks on them. Note that this is the CPU frequency, and it **does NOT affect** the performance of IAA.
 
 ## Reproducing Firecracker snapshotting results
-
-### What machine to use
-
-Firecracker, firecracker-containerd, vHive, and all the infrastructure run on any x86/64 machine with Ubuntu 22.04 or higher. However, the Sabre plugin is based on Intel IAA technology and requires at least the 4th Gen Intel Xeon Scalable processor (Sapphire Rapids - SPR). In addition, not any SPR machine will work as the presence of IAA hardware and the exact configuration depends on the SKU. In theory, any IAA-enabled SPR machine should run Sabre with potentially varying performance.
-
-**CAUTION** The host kernel support for IAA hardware is still under active development; as of *Ubuntu 23.10*, the driver and kernel stack still has unsolved issues preventing using IAA hardware (e.g. [IOMMU](https://lore.kernel.org/lkml/c67754fc-9fff-43b4-82ce-078e71134815@linux.intel.com/T/) issue). If your node runs Ubuntu 22.04 - Ubuntu 23.10, please, manually update the host kernel to *6.8.2* which we tested to work with IAA. We expect all changes will finally converge in the next release.
-
-For artifact evaluation, we welcome reviewers to use our instance of an SPR node which runs the correct patched OS, BIOS, and other settings. This will alow to exactly reproduce our results. If you have your own SPR node, depending on the OS, Software/BIOS configurations, Sabre should still run. But performance results are expected to vary between different nodes.
 
 ### Build, install, and test the environment
 
