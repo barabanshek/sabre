@@ -41,11 +41,17 @@ To reproduce, please, follow [Instructions](https://github.com/barabanshek/IAA_b
 
 Build Firecracker with Sabre and firecracker-containerd with Sabre API; install all; prepare IAA hardware.
 ```
+# Run on a fresh machine.
 ./build_and_install_sabre.sh
+
+# Run after every reboot.
+./prepare_end_to_end_env.sh
 
 # Export some env vars.
 source env.sh
 ```
+
+After reboot, only `./prepare_end_to_end_env.sh` needs to be executed. In a new session, `source env.sh` needs to be invoked. For convenience, you can add both scripts in your `bash_profile`.
 
 Test Sabre. All tests should pass.
 ```
@@ -98,12 +104,6 @@ python3 firecracker/sabre/scripts/plot_microbenchmark.py results.csv
 This allows to (manually) reproduce end-to-end cold start of Serverless functions for **Figure 11 and 12**.
 
 ```
-# Prepare environment for end-to-end Serverless experiments.
-./prepare_end_to_end_env.sh
-
-# Export required env variables.
-source env.sh
-
 # In a separate window: start firecracker-containerd.
 sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
 
