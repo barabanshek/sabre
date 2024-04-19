@@ -33,6 +33,8 @@ pushd ~/firecracker-containerd/sabre/
 ./configure_node_for_containerd.sh ${FIRECRACKER_PATH}
 ./configure_node_for_containerd.sh ${FIRECRACKER_PATH}
 
+popd
+
 # Make a tap device.
 TAP_DEV="tap0"
 TAP_IP=${CONTAINER_SUBNET}
