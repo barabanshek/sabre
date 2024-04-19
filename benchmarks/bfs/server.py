@@ -41,7 +41,7 @@ class Greeter(fibonacci_pb2_grpc.GreeterServicer):
         except:
             size = 50000
         lat, res = bfs(size)
-        msg = "fn: bfs | size: %i, res:%s, lat: %f | runtime: python" % (size, res, lat)
+        msg = "fn: bfs | size: %i, res:%s, lat: %f | runtime: python" % (size, res[0][0], lat)
         return fibonacci_pb2.HelloReply(message=msg)
 
 def serve():
