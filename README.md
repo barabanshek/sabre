@@ -86,9 +86,17 @@ sudo env "PATH=$PATH" go run hello_world.go -image=docker.io/library/hello-world
 
 # Diff snapshotting with Sabre
 sudo env "PATH=$PATH" go run hello_world.go -image=docker.io/library/hello-world:latest -memsize=256 -example=start-sabre-diff-snapshot-stop-resume-stop
-
 # Check the Sabre snapshot file (`mem_file.snapshot` size should be MUCH less than uVM's memsize size)
 ls -sh /fccd/snapshots/myrev-4/*
+
+# REAP snapshots
+sudo env "PATH=$PATH" ./hello_world -image=docker.io/library/hello-world:latest -memsize=256 -example=start-snapshot-stop-resume-record-stop-replay-stop
+# WS files can be found in the same dir (mem_file.ws.partitions, mem_file.ws.snapshot);
+# in this example, they are small as we don't really record much without invoking.
+ls -sh /fccd/snapshots/myrev-4/*
+
+# REAP snapshots with Sabre
+sudo env "PATH=$PATH" ./hello_world -image=docker.io/library/hello-world:latest -memsize=256 -example=start-snapshot-stop-resume-record-stop-replay-stop-sabre
 ```
 
 If all works well, we can now run the benchmarks!
@@ -132,18 +140,22 @@ docker build -t localhost:5000/cnn_image_classification .
 docker push localhost:5000/cnn_image_classification
 popd
 
+# Clean things which might have been left after previous runs.
+sudo ./clean_up.sh
+
 # Run default Diff snapshotting with on-demand paging.
 pushd vHive/sabre/
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='Diff' -memsize=512
 # Check size of the snapshot.
 ls -sh /fccd/snapshots/myrev-4/mem_file
 
-# Run Diff snapshotting with Sabre page prefetching.
+# Run Diff snapshotting with Sabre compression and page prefetching.
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='DiffCompressed' -memsize=512
-# Check size of the snapshot.
+# Check the red-line output for VM startup and cold start stats.
+# Check size of the compressed snapshot.
 ls -sh /fccd/snapshots/myrev-4/mem_file.snapshot
 
-# ... or for `cnn_image_classification`
+# ... or for something real like `cnn_image_classification`
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='Diff' -memsize=512
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='DiffCompressed' -memsize=512
 
