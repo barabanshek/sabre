@@ -92,7 +92,7 @@ ls -sh /fccd/snapshots/myrev-4/*
 # REAP snapshots
 sudo env "PATH=$PATH" ./hello_world -image=docker.io/library/hello-world:latest -memsize=256 -example=start-snapshot-stop-resume-record-stop-replay-stop
 # WS files can be found in the same dir (mem_file.ws.partitions, mem_file.ws.snapshot);
-# in this example, they are small as we don't really record much without invoking.
+# in this example, they are small as we don't really record much in the hello_world image.
 ls -sh /fccd/snapshots/myrev-4/*
 
 # REAP snapshots with Sabre
