@@ -3,7 +3,7 @@
 The table contains names of the benchmarks as in the paper.
 
 | Name in the paper | Name in this folder | Suggested VM size, MB |
-| --- | --- |
+| --- | --- | --- |
 | python-list | python_list | 512 |
 | image-processing-hd | image_processing | 512 |
 | image-processing-low | image_processing | 256 - 512 |
