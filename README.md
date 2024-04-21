@@ -161,6 +161,10 @@ sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/python_list
 # ... or same for something real like `cnn_image_classification`
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='Diff' -memsize=512
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='DiffCompressed' -memsize=512
+
+# Run any other benchmark in a similar way:
+#   - refer to [README.md](IAA_benchmarking/README.md) to match benchmark names;
+#   - refer to the [invoker](vHive/sabre/invoke.sh) to see invocation commands.
 ```
 
 Finding results:
@@ -183,6 +187,10 @@ sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/python
 # ... or same for something real like `cnn_image_classification`
 sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='reap' -memsize=1024
 sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='reapCompressed' -memsize=1024
+
+# Run any other benchmark in a similar way:
+#   - refer to [README.md](IAA_benchmarking/README.md) to match benchmark names;
+#   - refer to the [invoker](vHive/sabre/invoke_reap.sh) to see invocation commands.
 ```
 
 Finding results:
