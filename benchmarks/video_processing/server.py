@@ -67,9 +67,9 @@ class Greeter(fibonacci_pb2_grpc.GreeterServicer):
 
     def SayHello(self, request, context):
         if request.name == "record":
-            video_filename = "SampleVideo_1280x720_30mb.mp4"
+            video_filename = "SampleVideo_1280x720_2mb.mp4"
         elif request.name == "replay":
-            video_filename = "SampleVideo_640x360_30mb.mp4"
+            video_filename = "SampleVideo_640x360_2mb.mp4"
         elif request.name == "hd2":
             video_filename = "SampleVideo_1280x720_2mb.mp4"
         elif request.name == "hd10":
