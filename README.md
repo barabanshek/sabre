@@ -10,7 +10,7 @@ The projects involves 5 sub-projects described in the table bellow.
 
 | sub-repo | Description |
 | --- | --- |
-| [IAA_benchmarking](https://github.com/barabanshek/IAA_benchmarking) | A set of our benchmarks to understand the performance implications of IAA (de)compression hardware on page compression and restoration. |
+| [IAA_benchmarking](https://github.com/barabanshek/IAA_benchmarking) | A set of our benchmarks to understand performance implications of IAA (de)compression hardware on page compression and restoration. |
 | [Firecracker](https://github.com/barabanshek/firecracker/) | Sabre plugin for Firecracker microVMs. [README](https://github.com/barabanshek/firecracker/tree/sabre/sabre), [Full Diff](https://github.com/barabanshek/firecracker/compare/532677328480b7f4149192ec121ac076451ac098...sabre) |
 | [firecracker-containerd](https://github.com/barabanshek/firecracker-containerd/) | firecracker-continerd with exposed Sabre API [README](https://github.com/barabanshek/firecracker-containerd/tree/sabre/sabre), [Full Diff](https://github.com/barabanshek/firecracker-containerd/compare/6b2d23241ad47456283917c5f3a15638cbd66027...sabre) |
 | [firecracker-go-sdk](https://github.com/barabanshek/firecracker-go-sdk) | firecracker-go-sdk with exposed Sabre API. [Full Diff](https://github.com/barabanshek/firecracker-go-sdk/compare/1f800728632d4e45a384080a51676c5a43665ffd..sabre) |
@@ -136,6 +136,8 @@ pushd benchmarks/cnn_image_classification/
 docker build -t localhost:5000/cnn_image_classification .
 docker push localhost:5000/cnn_image_classification
 popd
+
+# ... or do the same for any other benchmark you want...
 ```
 
 #### Then, start firecracker-containerd (in a separate window)
@@ -163,8 +165,8 @@ sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_c
 
 Finding results:
 
-- Size of default Diff snapshots is here: `ls -sh /fccd/snapshots/myrev-4/mem_file`
-- Size of Sabre compressed Diff snapshots is here: `ls -sh /fccd/snapshots/myrev-4/mem_file.snapshot`
+- Size of default Diff snapshots is here: `ls -sh /fccd/snapshots/myrev-4/mem_file`;
+- Size of Sabre compressed Diff snapshots is here: `ls -sh /fccd/snapshots/myrev-4/mem_file.snapshot`;
 - VM start and cold start latencies will be printed after each run in red color.
 
 #### Run REAP and REAP-Compressed snapshots (**Figure 12, and Table 2**).
@@ -172,10 +174,19 @@ Finding results:
 # Clean things which might have been left after previous runs.
 sudo ./../../clean_up.sh
 
-TODO
+# Run baseline REAP snapshotting.
+sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='reap' -memsize=512
+
+# Run REAP snapshotting with Sabre compression.
+sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='reapCompressed' -memsize=512
+
+# ... or same for something real like `cnn_image_classification`
+sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='reap' -memsize=1024
+sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='reapCompressed' -memsize=1024
 ```
 
 Finding results:
 - To check the original and compressed snapshot size, look at vm.log: `cat vm.log | grep 'compressed size'`
     - x1 ratio means no compression was used (default REAP run);
-- To check the time for memory prefetching (and speed-up), look at vm.log: `cat vm.log | grep 'Memory restoration, took'`
+- To check the time for memory prefetching (and speed-up over REAP with no compression), look at vm.log: `cat vm.log | grep 'Memory restoration, took'`;
+- VM start and cold start latencies will be printed after each run in red color.
