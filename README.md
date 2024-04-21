@@ -79,6 +79,10 @@ sudo firecracker-ctr --address /run/firecracker-containerd/containerd.sock run -
 
 Run `Hello, World` tests with end-to-end Serverless images in firecracker-containerd with Sabre. The test will run the standard `docker.io/library/hello-world` image inside firecracker using vHive Serverless infrastructure and do test snapshotting.
 ```
+# In a separate window: start firecracker-containerd.
+sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
+
+# In main window:
 pushd vHive/sabre
 
 # Simple uVM start-stop test
@@ -118,17 +122,10 @@ python3 firecracker/sabre/scripts/plot_microbenchmark.py results.csv
 
 ### Reproducing end-to-end experiments
 
-This allows to (manually) reproduce end-to-end cold start of Serverless functions for **Figure 11 and 12**.
+This allows to (manually) reproduce compresison ratio, prefetching speed-up, and end-to-end cold start impact of Serverless functions for **Figure 11, 12, and Table 2**.
 
+#### First, build benchmarks and push them into the local registry.
 ```
-# In a separate window: start firecracker-containerd.
-sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml
-
-#
-# Running a single end-to-end benchmark to see Diff snapshotting.
-#
-
-# Build the benchmark and push into local registry.
 pushd benchmarks/python_list/
 docker build -t localhost:5000/python_list .
 docker push localhost:5000/python_list
@@ -139,29 +136,46 @@ pushd benchmarks/cnn_image_classification/
 docker build -t localhost:5000/cnn_image_classification .
 docker push localhost:5000/cnn_image_classification
 popd
+```
+
+#### Then, start firecracker-containerd (in a separate window)
+```
+sudo firecracker-containerd --config /etc/firecracker-containerd/config.toml 2>&1 | tee vm.log
+```
+
+#### Run Diff and Diff-Compressed snapshots (**Figure 11**).
+```
+pushd vHive/sabre/
 
 # Clean things which might have been left after previous runs.
-sudo ./clean_up.sh
+sudo ./../../clean_up.sh
 
-# Run default Diff snapshotting with on-demand paging.
-pushd vHive/sabre/
+# Run default Diff snapshotting with on-demand paging
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='Diff' -memsize=512
-# Check size of the snapshot.
-ls -sh /fccd/snapshots/myrev-4/mem_file
 
 # Run Diff snapshotting with Sabre compression and page prefetching.
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/python_list:latest -invoke_cmd='python_list' -snapshot='DiffCompressed' -memsize=512
-# Check the red-line output for VM startup and cold start stats.
-# Check size of the compressed snapshot.
-ls -sh /fccd/snapshots/myrev-4/mem_file.snapshot
 
-# ... or for something real like `cnn_image_classification`
+# ... or same for something real like `cnn_image_classification`
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='Diff' -memsize=512
 sudo -E env "PATH=$PATH" go run run_end2end.go -image=127.0.0.1:5000/cnn_image_classification:latest -invoke_cmd='cnn_image_classification' -snapshot='DiffCompressed' -memsize=512
-
-
-#
-# Running a single end-to-end benchmark to see REAP snapshotting.
-#
-
 ```
+
+Finding results:
+
+- Size of default Diff snapshots is here: `ls -sh /fccd/snapshots/myrev-4/mem_file`
+- Size of Sabre compressed Diff snapshots is here: `ls -sh /fccd/snapshots/myrev-4/mem_file.snapshot`
+- VM start and cold start latencies will be printed after each run in red color.
+
+#### Run REAP and REAP-Compressed snapshots (**Figure 12, and Table 2**).
+```
+# Clean things which might have been left after previous runs.
+sudo ./../../clean_up.sh
+
+TODO
+```
+
+Finding results:
+- To check the original and compressed snapshot size, look at vm.log: `cat vm.log | grep 'compressed size'`
+    - x1 ratio means no compression was used (default REAP run);
+- To check the time for memory prefetching (and speed-up), look at vm.log: `cat vm.log | grep 'Memory restoration, took'`
