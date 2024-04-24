@@ -35,3 +35,7 @@ cmake -DgRPC_BUILD_TESTS=ON ../..
 make grpc_cli -j
 
 popd
+
+# Install some python deps for auto-plotting benchmarks.
+sudo apt install python3-pip
+pip install pandas matplotlib
