@@ -39,6 +39,7 @@ For artifact evaluation, we welcome reviewers to use our instance of an SPR node
 - install docker, make sure your user is added in the docker group;
 - install `idxd-config` system-wide as instructed [here](https://github.com/intel/idxd-config);
 - install `cmake`, [gflags](https://github.com/gflags/gflags/blob/master/INSTALL.md).
+- install net-tools: `sudo apt install net-tools`
 
 ### Caution
 
@@ -133,6 +134,8 @@ python3 firecracker/sabre/scripts/plot_microbenchmark.py results.csv
 ### Reproducing end-to-end experiments
 
 This allows to (manually) reproduce compresison ratio, prefetching speed-up, and end-to-end cold start impact of Serverless functions for **Figure 11, 12, and Table 2**.
+
+**Note:** The Serverless invocation commands are encapsulated in `run_end2end.go` and `run_reap_end2end.go` scripts.
 
 #### First, build benchmarks and push them into the local registry.
 ```
