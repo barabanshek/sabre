@@ -38,7 +38,7 @@ For artifact evaluation, we welcome reviewers to use our instance of an SPR node
 ## Preparing machine
 - install docker, make sure your user is added in the docker group;
 - install `idxd-config` system-wide as instructed [here](https://github.com/intel/idxd-config);
-- install `cmake`.
+- install `cmake`, [gflags](https://github.com/gflags/gflags/blob/master/INSTALL.md).
 
 ### Caution
 
