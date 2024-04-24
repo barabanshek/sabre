@@ -3,6 +3,12 @@
 # This scripts builds all components needed to run Sabre with all dependencies.
 # Run it on a fresh machine.
 
+# Install dependencies.
+sudo apt update
+sudo apt install -y net-tools libgflags-dev cmake
+sudo apt install -y python3-pip
+pip install pandas matplotlib
+
 # Build Firecracker with Sabre:
 #   - main instructions: https://github.com/barabanshek/firecracker/tree/sabre/sabre .
 pushd firecracker/
@@ -35,7 +41,3 @@ cmake -DgRPC_BUILD_TESTS=ON ../..
 make grpc_cli -j
 
 popd
-
-# Install some python deps for auto-plotting benchmarks.
-sudo apt install python3-pip
-pip install pandas matplotlib
