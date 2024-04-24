@@ -31,10 +31,12 @@ Firecracker, firecracker-containerd, vHive, and all the infrastructure run on an
 
 **CAUTION:** The host kernel support for IAA hardware is still under active development; as of *Ubuntu 23.10*, the driver and kernel stack still has unsolved issues preventing using IAA hardware (e.g. [IOMMU](https://lore.kernel.org/lkml/c67754fc-9fff-43b4-82ce-078e71134815@linux.intel.com/T/) issue). If your node runs *Ubuntu 22.04 - Ubuntu 23.10*, please, manually update the host kernel to *6.8.2* which we tested to work with IAA. We expect all changes to finally converge in the next release.
 
+**CAUTION** If you use your own SPR node, make sure the system (BIOS, kernel boot args, etc.) is configured as per [Intel Analytics Accelerator User Guide](https://cdrdv2-public.intel.com/780887/354834_IAA_UserGuide_June23.pdf).
+
 For artifact evaluation, we welcome reviewers to use our instance of an SPR node which runs the correct patched OS, BIOS, and other settings. This will allow to reliably reproduce our results.
 
 ## Preparing machine
-- install docker, make sure your use is added in the docker group;
+- install docker, make sure your user is added in the docker group;
 - install `idxd-config` system-wide as instructed [here](https://github.com/intel/idxd-config).
 
 ### Caution
