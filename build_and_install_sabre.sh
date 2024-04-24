@@ -17,7 +17,7 @@ popd
 # Due to a weird bug: https://github.com/barabanshek/sabre/issues/1, we clone the repo separately
 # outside of this folder.
 pushd ~/
-git clone https://github.com/barabanshek/firecracker-containerd.git
+rm -fr firecracker-containerd/; git clone https://github.com/barabanshek/firecracker-containerd.git
 cd firecracker-containerd/
 git fetch origin sabre; git checkout sabre
 cd sabre/
