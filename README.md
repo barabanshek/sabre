@@ -41,7 +41,7 @@ For artifact evaluation, we welcome reviewers to use our instance of an SPR node
 
 ### Caution
 
-Depending on the IAA hardware configuration in your SKU, you might want to consider adjusting the `accel-config config-wq ...` line in [configure_iaa_user.sh](IAA_benchmarking/configure_iaa_user.sh) accordingly.
+Depending on the IAA hardware configuration in your SKU, you might want to consider adjusting the `accel-config config-wq ...` line in [configure_iaa_user.sh](https://github.com/barabanshek/IAA_benchmarking/blob/main/configure_iaa_user.sh) and [configure_iaa_user.sh](https://github.com/barabanshek/firecracker/blob/sabre/sabre/scripts/configure_iaa_user.sh) accordingly.
 
 ## Reproducing IAA benchmarks
 
