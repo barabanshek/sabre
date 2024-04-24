@@ -206,6 +206,7 @@ sudo -E env "PATH=$PATH" go run run_reap_end2end.go -image=127.0.0.1:5000/cnn_im
 
 Finding results:
 - To check the original and compressed snapshot size, look at vm.log: `cat vm.log | grep 'compressed size'`
+    - the `vm.log` file is in the location `firecracker-containerd` was run from;
     - x1 ratio means no compression was used (default REAP run);
 - To check the time for memory prefetching (and speed-up over REAP with no compression), look at vm.log: `cat vm.log | grep 'Memory restoration, took'`;
 - VM start and cold start latencies will be printed after each run in red color.
