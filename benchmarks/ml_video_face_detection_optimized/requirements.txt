@@ -1,4 +1,0 @@
-grpcio==1.45.0
-grpcio-tools==1.45.0
-grpcio_reflection
-opencv-python
