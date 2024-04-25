@@ -109,7 +109,7 @@ sudo env "PATH=$PATH" go run ./hello_world.go -image=docker.io/library/hello-wor
 ls -sh /fccd/snapshots/myrev-4/*
 
 # REAP snapshots with Sabre
-sudo env "PATH=$PATH" ./hello_world.go -image=docker.io/library/hello-world:latest -memsize=256 -example=start-snapshot-stop-resume-record-stop-replay-stop-sabre
+sudo env "PATH=$PATH" go run ./hello_world.go -image=docker.io/library/hello-world:latest -memsize=256 -example=start-snapshot-stop-resume-record-stop-replay-stop-sabre
 ```
 
 If all works well, we can now run the benchmarks!
